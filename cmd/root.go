@@ -10,6 +10,7 @@ import (
 	"github.com/lindell/multi-gitter/internal/domain"
 	"github.com/lindell/multi-gitter/internal/github"
 	"github.com/lindell/multi-gitter/internal/gitlab"
+	"github.com/lindell/multi-gitter/internal/http"
 	"github.com/lindell/multi-gitter/internal/multigitter"
 
 	"github.com/pkg/errors"
@@ -167,7 +168,7 @@ func createGithubClient(flag *flag.FlagSet) (multigitter.VersionController, erro
 		}
 	}
 
-	vc, err := github.New(token, ghBaseURL, github.RepositoryListing{
+	vc, err := github.New(token, ghBaseURL, http.NewLoggingRoundTripper, github.RepositoryListing{
 		Organizations: orgs,
 		Users:         users,
 		Repositories:  repoRefs,
